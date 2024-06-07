@@ -16,9 +16,11 @@ export function LoginForm() {
     const formData = new FormData(e.currentTarget)
 
     const data = {
-      email: formData.get('email') as string,
+      username: formData.get('username') as string,
       password: formData.get('password') as string,
     }
+
+    console.log(data)
 
     signIn('credentials', {
       ...data,
@@ -28,12 +30,12 @@ export function LoginForm() {
   return (
     <form onSubmit={login} className="space-y-4">
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">Username</Label>
         <Input
-          id="email"
-          type="email"
-          placeholder="m@exemplo.com"
-          name="email"
+          id="username"
+          type="text"
+          placeholder="seu_nome_de_usuario"
+          name="username"
           required
         />
       </div>

@@ -1,12 +1,5 @@
-/**
- * v0 por Vercel.
- * @veja https://v0.dev/t/1EAMnaaNE0w
- * Documentação: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { LoginForm } from './_components/login_form'
 
 export default function Home() {
   return (
@@ -20,24 +13,7 @@ export default function Home() {
             Faça login na sua conta para continuar.
           </p>
         </div>
-        <form className="space-y-4">
-          <div>
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@exemplo.com"
-              required
-            />
-          </div>
-          <div>
-            <Label htmlFor="password">Senha</Label>
-            <Input id="password" type="password" required />
-          </div>
-          <Button type="submit" className="w-full">
-            Entrar
-          </Button>
-        </form>
+        <LoginForm />
         <div className="flex items-center justify-between">
           <Link
             href="#"

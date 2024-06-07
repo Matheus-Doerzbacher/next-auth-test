@@ -4,8 +4,13 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { signIn } from 'next-auth/react'
+import { useSearchParams } from 'next/navigation'
+import { Alert, AlertTitle } from '@/components/ui/alert'
 
 export function LoginForm() {
+  const searchParams = useSearchParams()
+  const error = searchParams.get('error')
+
   async function login(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -14,8 +19,6 @@ export function LoginForm() {
       email: formData.get('email') as string,
       password: formData.get('password') as string,
     }
-
-    console.log(data)
 
     signIn('credentials', {
       ...data,
@@ -41,6 +44,13 @@ export function LoginForm() {
       <Button type="submit" className="w-full">
         Entrar
       </Button>
+      {error && (
+        <Alert variant="destructive">
+          <AlertTitle className="text-center">
+            {error === 'CredentialsSignin' ? 'Erro no login' : error}
+          </AlertTitle>
+        </Alert>
+      )}
     </form>
   )
 }

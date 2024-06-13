@@ -27,20 +27,19 @@ const handler = NextAuth({
             headers: { 'Content-Type': 'application/json' },
           })
 
-          console.log('Response: ' + response)
           if (response.status !== 200) return null
 
           const data = await response.json()
-          console.log('Data: ', data)
 
-          if (!data.token || !data.username) return null
+          if (!data.token || !data.user.username) return null
 
           cookies().set('token', data.token)
 
           return {
-            id: data.id,
-            name: data.username,
-            email: '',
+            id: data.user.id,
+            username: data.user.username,
+            name: data.user.username,
+            email: data.user.email,
           }
         } catch (err) {
           console.log(err)
@@ -49,6 +48,27 @@ const handler = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user, account }) {
+      console.log({ account })
+
+      if (user) {
+        token.id = user.id
+        token.name = user.name
+        token.email = user.email
+      }
+
+      return token
+    },
+    async session({ session, token }) {
+      console.log({ token })
+      session.user = {
+        name: token.name,
+        email: token.email,
+      }
+      return session
+    },
+  },
 })
 
 export { handler as GET, handler as POST }
